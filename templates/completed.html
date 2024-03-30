@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+<!-- Tasks -->
+{% block content %}
+<section
+  class="flex flex-1 flex-wrap justify-center gap-3 bg-[#fff0] w-10/12 md:w-11/12 h-full mb-3 rounded-2xl p-3 overflow-y-auto scrollbar-hide">
+  <!-- Task card -->
+  {% for task in task %}
+  <div class="w-[355px] flex flex-col shadow-md bg-white h-[120px] rounded-xl p-3">
+    <!-- Top -->
+    <div class="flex flex-row justify-between">
+      <!-- Left: Title and Description -->
+      <div>
+        {% url 'task_detail' task.id as task_detail_url %}
+        <a href="{{task_detail_url}}">
+          <h1 class="text-green-500 font-semibold text-xl italic line-through">
+            {{task.task_title}}
+          </h1>
+        </a>
+        <p class="text-gray-500 text-md">
+          {{task.task_description|slice:":35"}}...
+        </p>
+      </div>
+      <!-- Right: Toggle complete mode -->
+      {% url 'toggle_completed' as toggle_completed_url %}
+      <a href="{{toggle_completed_url}}">
+        <i class="bx bxs-check-circle bx-sm text-green-500"></i>
+      </a>
+    </div>
+    <!-- Line -->
+    <hr class="border-t border-gray-200 my-2" />
+    <!-- Bottom: Time and Date | Delete -->
+    <div class="flex flex-row justify-between">
+      <h2 class="text-blue-400 font-bold">
+        Completed <i class="bx bxs-badge-check"></i>
+      </h2>
+      {% url 'deleted_task' task.id as deleted_task_url %}
+      <a href="{{deleted_task_url}}">
+        <i class="bx bxs-trash bx-sm text-red-500"></i>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}
+<!-- Box Icons -->
